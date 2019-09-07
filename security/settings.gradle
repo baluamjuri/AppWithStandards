@@ -1,0 +1,9 @@
+rootProject.name = 'security'
+
+include ':common-utils'
+include ':auth-center'
+include ':user-service'
+
+project(':auth-center').projectDir = "$rootDir/auth-center" as File
+project(':user-service').projectDir = "$rootDir/user-service" as File
+project(':common-utils').projectDir = "$rootDir/common-utils" as File

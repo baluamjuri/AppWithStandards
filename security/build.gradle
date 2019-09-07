@@ -1,0 +1,55 @@
+buildscript {
+	ext {
+		springBootVersion = '2.1.0.RELEASE'
+	}		
+	repositories {
+	    mavenCentral()
+	    maven { url "https://repo.spring.io/milestone" }
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+allprojects  {
+	apply plugin: 'maven'
+	apply plugin: 'java'
+	apply plugin: 'eclipse'
+ 	apply plugin: 'org.springframework.boot'
+	apply plugin: 'io.spring.dependency-management'
+  	group = 'org.balu.learn'
+	version = '1.0.0'
+	
+	repositories {
+	    mavenCentral()
+	    maven { url "https://repo.spring.io/milestone" }
+	}
+}
+
+subprojects {
+  apply plugin: 'java'
+  sourceCompatibility = 1.8
+  targetCompatibility = 1.8
+  tasks.withType(JavaCompile) {
+  	options.encoding = 'UTF-8'
+  }
+
+  
+  repositories {
+    mavenLocal()
+    maven { url "https://repo.spring.io/milestone" }
+  }
+
+  ext {
+	springCloudVersion = 'Greenwich.M1'
+  }  
+}
+
+
+bootJar {
+    enabled = false
+}
+
+jar {
+    enabled = true
+}
