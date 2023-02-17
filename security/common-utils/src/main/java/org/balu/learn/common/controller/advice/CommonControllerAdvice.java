@@ -62,7 +62,10 @@ public class CommonControllerAdvice {
 		Map<Object, String> violationMap =				
 				ex.getConstraintViolations()
 				.stream()
-				.collect(Collectors.toMap(constraintViolation->this.getInvalidValue(constraintViolation), ConstraintViolation::getMessage));
+				.collect(
+						Collectors.toMap(ConstraintViolation::getInvalidValue, 
+								ConstraintViolation::getMessage,
+								(msg1, msg2) -> msg1+", "+msg2));
 		
 		
 		ParameterConstraintViolationResponseDTO parameterConstraintViolationResponseDTO = 
@@ -70,7 +73,7 @@ public class CommonControllerAdvice {
 				.violationMap(violationMap)
 				.path(request.getServletPath())
 				.build();
-		
+		log.info("Validations: {}", parameterConstraintViolationResponseDTO);
 		return parameterConstraintViolationResponseDTO;
 	}
 	
